@@ -2,7 +2,10 @@ import { useCallback, useMemo, useState } from 'react';
 
 type Errors<T> = Partial<Record<keyof T, string>>;
 
-export function useForm<T extends Record<string, unknown>>(initial: T, validate: (values: T) => Errors<T>) {
+export function useForm<T extends object>(
+  initial: T,
+  validate: (values: T) => Errors<T>
+) {
   const [values, setValues] = useState<T>(initial);
   const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
   const errors = useMemo(() => validate(values), [values, validate]);
